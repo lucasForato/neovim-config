@@ -31,18 +31,65 @@ M.general = {
     ["<leader>e"] = { ":NvimTreeToggle<cr>", "Toggle Explorer", opts = { nowait = true } },
 
     -- terminals
-    ["<C-1>"] = {
+    ["<c-1>"] = {
       function()
-        require("nvterm.terminal").new "horizontal"
+        require("nvterm.terminal").toggle "float"
+        vim.cmd [[startinsert]]
       end,
-      "New Horizontal terminal",
+      "Toggle Floating terminal",
       opts = { nowait = true },
     },
-    ["<C-2>"] = {
+    ["<c-Esc>"] = {
       function()
-        require("nvterm.terminal").new "vertical"
+        require("nvterm.terminal").toggle "vertical"
       end,
-      "New Vertical terminal",
+      "Toggle Vertical terminal",
+      opts = { nowait = true },
+    },
+    ["<c-`>"] = {
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+      "Toggle Horizontal terminal",
+      opts = { nowait = true },
+    },
+
+    -- SOAP BINDINGS
+    ["<leader>ts"] = {
+      function()
+        require("nvterm.terminal").send("int", "horizontal")
+      end,
+      "Start SOAP Interviewer Project",
+    },
+
+    ["<leader>tb"] = {
+      function()
+        require("nvterm.terminal").toggle "float"
+        require("nvterm.terminal").send("int --build", "float")
+      end,
+      "Build SOAP Interviewer Project",
+    },
+  },
+  t = {
+    ["<c-1>"] = {
+      function()
+        require("nvterm.terminal").toggle "float"
+      end,
+      "Toggle Horizontal terminal",
+      opts = { nowait = true },
+    },
+    ["<c-Esc>"] = {
+      function()
+        require("nvterm.terminal").toggle "vertical"
+      end,
+      "Toggle Vertical terminal",
+      opts = { nowait = true },
+    },
+    ["<c-`>"] = {
+      function()
+        require("nvterm.terminal").toggle "horizontal"
+      end,
+      "Toggle Horizontal terminal",
       opts = { nowait = true },
     },
   },

@@ -23,9 +23,32 @@ local default_plugins = {
     init = function()
       require("core.utils").load_mappings "nvterm"
     end,
-    config = function(_, opts)
+    config = function()
       require "base46.term"
-      require("nvterm").setup(opts)
+      require("nvterm").setup {
+        terminals = {
+          type_opts = {
+            float = {
+              relative = "editor",
+              row = 0.1,
+              col = 0.1,
+              width = 0.8,
+              height = 0.7,
+              border = "single",
+            },
+            horizontal = {
+              location = "rightbelow",
+              split_ratio = 0.3,
+              border = "single",
+            },
+            vertical = {
+              location = "rightbelow",
+              split_ratio = 0.5,
+              border = "single",
+            },
+          },
+        },
+      }
     end,
   },
 
@@ -96,18 +119,16 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ "BufRead" }, {
         group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
         callback = function()
-          vim.fn.jobstart({"git", "-C", vim.loop.cwd(), "rev-parse"},
-            {
-              on_exit = function(_, return_code)
-                if return_code == 0 then
-                  vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-                  vim.schedule(function()
-                    require("lazy").load { plugins = { "gitsigns.nvim" } }
-                  end)
-                end
+          vim.fn.jobstart({ "git", "-C", vim.loop.cwd(), "rev-parse" }, {
+            on_exit = function(_, return_code)
+              if return_code == 0 then
+                vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+                vim.schedule(function()
+                  require("lazy").load { plugins = { "gitsigns.nvim" } }
+                end)
               end
-            }
-          )
+            end,
+          })
         end,
       })
     end,

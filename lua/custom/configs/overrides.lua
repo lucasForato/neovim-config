@@ -1,5 +1,27 @@
 local M = {}
 
+M.copilot = {
+  suggestion = {
+    enable = false,
+  },
+  panel = {
+    enable = false,
+  },
+}
+
+M.nvterm = {
+  terminals = {
+    float = {
+      relative = "editor",
+      row = 0.1,
+      col = 0.1,
+      width = 0.1,
+      height = 0.1,
+      border = "none",
+    },
+  },
+}
+
 M.treesitter = {
   ensure_installed = {
     "vim",
@@ -71,8 +93,8 @@ M.nvimtree = {
   },
   actions = {
     open_file = {
-      quit_on_open = true
-    }
+      quit_on_open = true,
+    },
   },
   update_focused_file = {
     enable = true,

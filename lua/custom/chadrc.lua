@@ -4,9 +4,6 @@ local M = {}
 -- Path to overriding theme and highlights files
 local highlights = require "custom.highlights"
 
--- relative line numbers
-vim.opt.relativenumber = true
-
 M.ui = {
   theme = "gatekeeper",
   theme_toggle = { "gatekeeper", "one_light" },

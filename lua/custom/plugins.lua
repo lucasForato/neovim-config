@@ -3,25 +3,40 @@ local overrides = require "custom.configs.overrides"
 ---@type NvPluginSpec[]
 local plugins = {
 
-  -- copilot
   {
     "zbirenbaum/copilot.lua",
-    lazy = true,
-    cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup {
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      }
-    end,
+    opts = overrides.copilot,
   },
 
   {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+          require("copilot_cmp").setup()
+        end,
+      },
+    },
+    opts = {
+      sources = {
+        { name = "nvim_lsp", group_index = 2 },
+        { name = "copilot", group_index = 2 },
+        { name = "luasnip", group_index = 2 },
+        { name = "buffer", group_index = 2 },
+        { name = "nvim_lua", group_index = 2 },
+        { name = "path", group_index = 2 },
+      },
+    },
   },
 
   -- Override plugin definition options
